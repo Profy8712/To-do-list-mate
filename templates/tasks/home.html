@@ -10,12 +10,13 @@
         {% for task in tasks %}
         <div class="task-item">
             <h5>{{ task.content }} <span class="{% if task.done %}done{% else %}not-done{% endif %}">{{ task.done|yesno:"Done,Not done" }}</span></h5>
-            <p><small>Created: {{ task.created|date:"M d, Y, H:i p" }}{% if task.deadline %}, Deadline: {{ task.deadline|date:"M d, Y, H:i p" }}{% endif %}</small></p>
-            <p>Tags: {% for tag in task.tags.all %}{{ tag.name }} {% endfor %}
+            <p><small>Created: {{ task.created|date:"F j, Y, g:i a" }}{% if task.deadline %}, Deadline: {{ task.deadline|date:"F j, Y, g:i a" }}{% endif %}</small></p>
+            <p>Tags: {% for tag in task.tags.all %}{{ tag.name }} {% endfor %}</p>
+            <div class="task-actions">
                 <a href="{% url 'tasks:task_update' task.pk %}" class="btn btn-secondary btn-sm">Update</a>
                 <a href="{% url 'tasks:task_delete' task.pk %}" class="btn btn-secondary btn-sm">Delete</a>
-            </p>
-            <a href="{% url 'tasks:toggle_task' task.pk %}" class="btn {% if task.done %}btn-secondary{% else %}btn-success{% endif %} btn-sm">{{ task.done|yesno:"Undo,Complete" }}</a>
+                <a href="{% url 'tasks:toggle_task' task.pk %}" class="btn {% if task.done %}btn-secondary{% else %}btn-success{% endif %} btn-sm float-end">{{ task.done|yesno:"Undo,Complete" }}</a>
+            </div>
         </div>
         {% endfor %}
     </div>

@@ -9,7 +9,9 @@ class TaskForm(forms.ModelForm):
         model = Task
         fields = ["content", "deadline", "tags"]
         widgets = {
-            "deadline": forms.DateTimeInput(attrs={"type": "datetime-local"}),
+            "deadline": forms.TextInput(
+                attrs={"type": "text", "placeholder": "YYYY-MM-DD HH:MM (e.g., 2025-05-05 14:30)",
+                       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}"}),
             "tags": forms.CheckboxSelectMultiple(),
         }
 
