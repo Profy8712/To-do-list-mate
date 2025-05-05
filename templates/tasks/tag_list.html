@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Tags</h2>
+    <a href="{% url 'tasks:tag_add' %}" class="btn btn-primary mb-4">Add</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tag in tags %}
+            <tr>
+                <td>{{ tag.name }}</td>
+                <td><a href="{% url 'tasks:tag_update' tag.pk %}" class="btn btn-secondary btn-sm">Update</a></td>
+                <td><a href="{% url 'tasks:tag_delete' tag.pk %}" class="btn btn-secondary btn-sm">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
