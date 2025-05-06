@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>TODO list</h2>
+    <div class="d-flex justify-content-end">
+        <a href="{% url 'tasks:task_add' %}" class="btn btn-primary mb-4">Add task</a>
+    </div>
+
+    <div class="task-list">
+        {% for task in tasks %}
+        <div class="task-item mb-4">
+            <h5>
+                {{ task.content }}
+                <span class="{% if task.done %}text-success{% else %}text-danger{% endif %}">
+                    {{ task.done|yesno:"Done,Not done" }}
+                </span>
+            </h5>
+            <p><small>Created: {{ task.created|date:"F j, Y, g:i a" }}{% if task.deadline %}, Deadline: {{ task.deadline|date:"F j, Y, g:i a" }}{% endif %}</small></p>
+            <p class="text-muted">Tags: {% for tag in task.tags.all %}{{ tag.name }} {% endfor %}</p>
+            <div class="task-actions">
+                <a href="{% url 'tasks:task_update' task.pk %}" class="btn btn-primary btn-sm">Update</a>
+                <a href="{% url 'tasks:task_delete' task.pk %}" class="btn btn-primary btn-sm">Delete</a>
+                <a href="{% url 'tasks:toggle_task' task.pk %}" class="btn {% if task.done %}btn-secondary{% else %}btn-success{% endif %} btn-sm float-end">{{ task.done|yesno:"Undo,Complete" }}</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
